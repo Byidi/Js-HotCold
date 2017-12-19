@@ -68,23 +68,25 @@ function setHistory(choix, type){
 }
 
 function compare(number, choix){
-    playSound('tambour.mp3', 1000, false);
 
     if(!isNaN(choix) && choix != ""){
-        if(choix >= 1 && choix <= 100){
-            essai ++;
-            if(number > choix){
-                document.getElementById("choix").style.backgroundImage = 'url("./img/plus.png")';
-                setHistory(choix,"sup");
-            }else if(number < choix){
-                document.getElementById("choix").style.backgroundImage = 'url("./img/moins.png")';
-                setHistory(choix,"inf");
-            }else{
-                gameEnd("win");
-            }
-        }else{
-            alert("C'est un nombre entre 1 et 100 ...");
-        }
+        playSound('tambour.mp3', 1500, false);
+        setTimeout(function(){
+          if(choix >= 1 && choix <= 100){
+              essai ++;
+              if(number > choix){
+                  document.getElementById("choix").style.backgroundImage = 'url("./img/plus.png")';
+                  setHistory(choix,"sup");
+              }else if(number < choix){
+                  document.getElementById("choix").style.backgroundImage = 'url("./img/moins.png")';
+                  setHistory(choix,"inf");
+              }else{
+                  gameEnd("win");
+              }
+          }else{
+              alert("C'est un nombre entre 1 et 100 ...");
+          }
+      }, 1500);
     }else{
         alert("Avec un nombre c'est mieux !!!");
         document.getElementById("choix").value = "";
@@ -103,14 +105,33 @@ function gameEnd(status){
     colorTable('random');
 
     if(status == "win"){
-        document.getElementById("nyancat_1").style.left = "1500px";
-        document.getElementById("nyancat_2").style.right = "1500px";
-        document.getElementById("nyancat_3").style.left = "1500px";
+        document.getElementById("nyancat_1").style.display = "visible";
+        document.getElementById("nyancat_2").style.display = "block";
+        document.getElementById("nyancat_3").style.display = "block";
+        document.getElementById("nyancat_1").style.left = "2500px";
+        document.getElementById("nyancat_2").style.right = "2500px";
+        document.getElementById("nyancat_3").style.left = "2500px";
+
         playSound('nyan.ogg', 0, true);
+
+        var boucle = setInterval(function(){
+          colorTable();
+          (cmp%2 == 0) ? colorTable('random') : colorTable('win');
+          cmp ++;
+          (cmp > 10000) ? clearInterval(boucle):"";
+        }, 100);
 
         document.getElementById("resultat").innerHTML = "Victoire !!!";
     }else{
         playSound('loose.mp3', 0, false);
+
+        var boucle = setInterval(function(){
+          colorTable();
+          (cmp%2 == 0) ? colorTable('random') : colorTable('loose');
+          cmp ++;
+          (cmp > 10000) ? clearInterval(boucle):"";
+        }, 100);
+
         document.getElementById("resultat").innerHTML = "Defaite ...";
     }
 }
@@ -140,7 +161,7 @@ document.getElementById("choix").focus();
 document.getElementById("choix").value = "";
 
 document.getElementById("choix").addEventListener('keypress',function(e){
-    if(e.keyCode == 13){
+    if(e.keyCode == 13 && essai < 10){
         var choix = document.getElementById("choix").value;
         document.getElementById("choix").focus();
         document.getElementById("choix").select();

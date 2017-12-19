@@ -56,6 +56,10 @@
     z-index: 0;
 }
 
+#background table{
+  width: 100%;
+}
+
 #background td{
     height: 25px;
     width: 25px;
@@ -80,20 +84,20 @@
 
 #nyancat_1{
     top : 50px;
-    left : -400px;
+    left : -1000px;
     transition: left 5s;
 }
 
 #nyancat_2{
     top : 50vh;
-    right : -400px;
+    right : -1000px;
     transform: translateY(-50%) scaleX(-1);
     transition: right 5s;
 }
 
 #nyancat_3{
     bottom : 50px;
-    left : -400px;
+    left : -1000px;
     transition: left 5s;
 }
 
