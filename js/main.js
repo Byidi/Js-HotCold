@@ -131,7 +131,7 @@ document.getElementById("choix").addEventListener('keypress',function(e){
         document.getElementById("choix").select();
         compare(number,choix);
         if(!victoire && essai == 5){
-            var max_hint = (10 - number.toString().slice(-1)) + number;
+            var max_hint = (number.toString().slice(-1) != 0)?(10 - number.toString().slice(-1)) + number:number;
             var min_hint = max_hint - 9;
             console.log("C'est compris entre : "+min_hint+" et "+max_hint);
         }else if(!victoire && essai == 10){
