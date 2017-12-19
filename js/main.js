@@ -68,30 +68,20 @@ function setHistory(choix, type){
 }
 
 function compare(number, choix){
-
-    if(!isNaN(choix) && choix != ""){
-        playSound('tambour.mp3', 1500, false);
-        setTimeout(function(){
-          if(choix >= 1 && choix <= 100){
-              essai ++;
-              if(number > choix){
-                  document.getElementById("choix").style.backgroundImage = 'url("./img/plus.png")';
-                  setHistory(choix,"sup");
-              }else if(number < choix){
-                  document.getElementById("choix").style.backgroundImage = 'url("./img/moins.png")';
-                  setHistory(choix,"inf");
-              }else{
-                  gameEnd("win");
-              }
-          }else{
-              alert("C'est un nombre entre 1 et 100 ...");
-          }
-      }, 1500);
-    }else{
-        alert("Avec un nombre c'est mieux !!!");
-        document.getElementById("choix").value = "";
-        document.getElementById("choix").focus();
-    }
+    playSound('tambour.mp3', 1500, false);
+    setTimeout(function(){
+      if(number > choix){
+          document.getElementById("choix").style.backgroundImage = 'url("./img/plus.png")';
+          setHistory(choix,"sup");
+      }else if(number < choix){
+          document.getElementById("choix").style.backgroundImage = 'url("./img/moins.png")';
+          setHistory(choix,"inf");
+      }else{
+          gameEnd("win");
+          fini = true;
+      }
+      essai++;
+    }, 1);
 }
 
 function gameEnd(status){
@@ -152,8 +142,8 @@ function playSound(file, duration, loop){
   audio.play();
 }
 
-var essai = 0;
-var victoire = false;
+var essai = 1;
+var fini = false;
 var number = getNumber(1, 100);
 console.log(number);
 
@@ -161,17 +151,35 @@ document.getElementById("choix").focus();
 document.getElementById("choix").value = "";
 
 document.getElementById("choix").addEventListener('keypress',function(e){
-    if(e.keyCode == 13 && essai < 10){
+    if(e.keyCode == 13 && !fini){
         var choix = document.getElementById("choix").value;
         document.getElementById("choix").focus();
         document.getElementById("choix").select();
-        compare(number,choix);
-        if(!victoire && essai == 5){
+
+        if(!isNaN(choix) && choix != ""){
+          if(choix >= 1 && choix <= 100){
+            console.log("essai "+essai+" : "+choix);
+            compare(number,choix);
+            console.log(essai);
+          }else{
+            alert("C'est un nombre entre 1 et 100 ...");
+            document.getElementById("choix").value = "";
+            document.getElementById("choix").focus();
+          }
+        }else{
+          alert("Avec un nombre c'est mieux !!!");
+          document.getElementById("choix").value = "";
+          document.getElementById("choix").focus();
+        }
+
+
+        if(!fini && essai == 5){
             var max_hint = (number.toString().slice(-1) != 0)?(10 - number.toString().slice(-1)) + number:number;
             var min_hint = max_hint - 9;
             console.log("C'est compris entre : "+min_hint+" et "+max_hint);
-        }else if(!victoire && essai == 10){
+        }else if(!fini && essai == 10){
             gameEnd("loose");
+            fini = true;
         }
     }
 });
