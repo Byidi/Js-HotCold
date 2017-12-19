@@ -103,17 +103,21 @@ function gameEnd(status){
         (cmp > 10000) ? clearInterval(boucle) : "";
     }, 50);
 
+    var audio = document.getElementById("audioplayer");
+
     if(status == "win"){
-        var audio = document.getElementById("nyan");
         document.getElementById("nyancat_1").style.left = "1500px";
         document.getElementById("nyancat_2").style.right = "1500px";
         document.getElementById("nyancat_3").style.left = "1500px";
-        audio.play();
 
+        document.getElementById("audioplayer").setAttribute("src", "./audio/nyan.ogg");
         document.getElementById("resultat").innerHTML = "Victoire !!!";
     }else{
+        document.getElementById("audioplayer").setAttribute("src", "./audio/loose.mp3");
         document.getElementById("resultat").innerHTML = "Defaite ...";
     }
+
+    audio.play();
 }
 
 var essai = 0;
