@@ -68,16 +68,30 @@ function setHistory(choix, type){
 }
 
 function compare(number, choix){
-    if(!isNaN(choix)){
-        essai ++;
-        if(number > choix){
-            document.getElementById("choix").style.backgroundImage = 'url("./img/plus.png")';
-            setHistory(choix,"sup");
-        }else if(number < choix){
-            document.getElementById("choix").style.backgroundImage = 'url("./img/moins.png")';
-            setHistory(choix,"inf");
+    var audio = document.getElementById("audioplayer");
+    document.getElementById("audioplayer").setAttribute("src", "./audio/tambour.mp3");
+    var cmp = 0;
+
+    audio.play();
+    var timer = setTimeout(function(){
+        audio.pause();
+        clearTimeout(timer);
+    },2000);
+
+    if(!isNaN(choix) && choix != ""){
+        if(choix >= 1 && choix <= 100){
+            essai ++;
+            if(number > choix){
+                document.getElementById("choix").style.backgroundImage = 'url("./img/plus.png")';
+                setHistory(choix,"sup");
+            }else if(number < choix){
+                document.getElementById("choix").style.backgroundImage = 'url("./img/moins.png")';
+                setHistory(choix,"inf");
+            }else{
+                gameEnd("win");
+            }
         }else{
-            gameEnd("win");
+            alert("C'est un nombre entre 1 et 100 ...");
         }
     }else{
         alert("Avec un nombre c'est mieux !!!");
@@ -116,7 +130,7 @@ function gameEnd(status){
         document.getElementById("audioplayer").setAttribute("src", "./audio/loose.mp3");
         document.getElementById("resultat").innerHTML = "Defaite ...";
     }
-
+    audio.currentTime = 0;
     audio.play();
 }
 
