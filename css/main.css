@@ -96,3 +96,14 @@
     left : -400px;
     transition: left 5s;
 }
+
+#resultat{
+    width : 100%;
+    text-align: center;
+    color : orange;
+    text-shadow: 5px 5px black;
+    position : relative;
+    z-index: 50;
+    font-size : 100px;
+    font-weight: bold;
+}

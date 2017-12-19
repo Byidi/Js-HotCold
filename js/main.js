@@ -7,8 +7,12 @@ function symboleAleatoire(){
 function getCouleur(type){
     var couleur = "";
     switch(type){
-        case 'predef':
-            var couleurs = ['red','yellow','blue'];
+        case 'win':
+            var couleurs = ['green','yellow','blue'];
+            couleur = couleurs[Math.floor(Math.random()*couleurs.length)];
+        break;
+        case 'loose':
+            var couleurs = ['red','black','brown'];
             couleur = couleurs[Math.floor(Math.random()*couleurs.length)];
         break;
         case 'white':
@@ -87,25 +91,28 @@ function gameEnd(status){
     document.getElementById("content").style.background = "#FFFFFFCC";
     document.getElementById("choix").readOnly = true;
 
+    var cmp = 0;
+
+    createHtml(35,51);
+    colorTable('random');
+
+    var boucle = setInterval(function(){
+        colorTable();
+        (cmp%2 == 0) ? colorTable('random') : colorTable(status);
+        cmp ++;
+        (cmp > 10000) ? clearInterval(boucle) : "";
+    }, 50);
+
     if(status == "win"){
         var audio = document.getElementById("nyan");
         document.getElementById("nyancat_1").style.left = "1500px";
         document.getElementById("nyancat_2").style.right = "1500px";
         document.getElementById("nyancat_3").style.left = "1500px";
         audio.play();
-        createHtml(35,51);
-        colorTable('random');
 
-        var cmp = 0;
-        var boucle = setInterval(function(){
-            colorTable();
-            (cmp%2 == 0) ? colorTable('random') : colorTable('predef');
-            cmp ++;
-            (cmp > 10000) ? clearInterval(boucle) : "";
-        }, 50);
+        document.getElementById("resultat").innerHTML = "Victoire !!!";
     }else{
-
-
+        document.getElementById("resultat").innerHTML = "Defaite ...";
     }
 }
 
