@@ -61,7 +61,7 @@ function setHistory(choix, type){
             p.innerHTML = essai+" : Sup&eacute;rieur &agrave; "+choix;
         break;
         case 'inf':
-            p.innerHTML = "Inf&eacute;rieur &agrave; "+choix;
+            p.innerHTML = essai+" : Inf&eacute;rieur &agrave; "+choix;
         break;
     }
     document.getElementById("history").appendChild(p);
